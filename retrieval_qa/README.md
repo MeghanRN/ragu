@@ -30,6 +30,38 @@ If you want to generate training data required for p(true) few-shots then you sh
   --proportion 1
 ```
 
+#### Generate target QA Model (LLM) judgements
+
+```
+python3 retrieval_qa/utility_distill_run_llm.py 
+   --model_name $LLM 
+   --input_file $HOMEDATA/$data-$split.jsonl 
+   --result_fp $HOMEOUT/$model-$data-$split-distil_t${TOP}_ctREAR3.jsonl
+   --split $SPLIT
+   --prompt_name \"chat_directRagQA_REAR3\" 
+   --prompt_name_cb \"chat_noRAG_REAR3\"
+   --chat_template
+   --top_n $TOP 
+   --temperature 0.0 
+   --top_p 1 
+   --max_new_tokens 50 
+   --do_stop
+```
+
+```prompt_name_cb```here closed-book generations are also stored and use this template.
+
+Once we get LLM-judgements, we also add Natural Langauge Inference annotations with the following script:
+
+```
+python3 retrieval_qa/utility_distill_score.py
+   --input_file $HOMEOUT/$model-$data-$split-distil_t${TOP}_ctREAR3.jsonl
+   --result_fp  $HOMEOUT/$model-$data-$split-distil_t${TOP}_ctREAR3-score.jsonl
+   --top_n $TOP
+```
+
+Finally we run the LLM-based Accuracy Evaluator (see below) with the flag ```--eval_distil``` on.
+
+
 ### LLM-based Accuracy Evaluator
 
 We use [Qwen/Qwen2-72B-Instruct-AWQ](https://huggingface.co/Qwen/Qwen2-72B-Instruct-AWQ) as our accuracy evaluator.

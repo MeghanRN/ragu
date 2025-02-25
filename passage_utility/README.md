@@ -25,15 +25,15 @@ python3 passage_utility/main.py
    --add_title True
 ```
 
-- ```PASSAGE_LLM_JUDEGEMENTS``` is the file annotated with utility judgements by the target LLM model (this are generated with the scripts in the [retrieval_qa/](../retrieval_qa/) folder).
+- ```PASSAGE_LLM_JUDEGEMENTS``` is the file annotated with utility judgements by the target LLM model (these are generated with the scripts in the [retrieval_qa/](../retrieval_qa/) folder).
 - ```REFRANK``` is the utility criteria variant (see argument specification for accepted values) the one used in the paper is <b>acc_LM-nli</b>.
-- ```w_aux``` is the weight given to the BCE loss term and ``w_rank``` to the pariwise ranking term.
+- ```w_aux``` is the weight given to the BCE loss term and ```w_rank``` to the pariwise ranking term.
 
 
 For prediction we use the following (we repeat the flags to crate a descriptive out file name -- TODO: should better save and load this):
 
 ```
-python3 BayesianOpt_uncertaiNLP2024/main.py
+python3 passage_utility/main.py
    --test_mode \"test\"
    --do_test True
    --save_dir HOMEOUT
